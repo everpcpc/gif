@@ -24,12 +24,12 @@ func main() {
 	router.Static("/css", "./css")
 	router.Static("/js", "./js")
 	router.LoadHTMLGlob("templates/*")
-	router.GET("/upload", func(c *gin.Context) {
+	router.GET("", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "upload.html", gin.H{
 			"title": "File upload",
 		})
 	})
-	router.POST("/upload", upload)
+	router.POST("", upload)
 	router.Run(":8080")
 }
 
