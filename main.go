@@ -66,8 +66,8 @@ func upload(c *gin.Context) {
 		"-y", tmpFileName,
 	}
 	patternCmd := exec.Command("ffmpeg", patternArgs...)
-	if err := patternCmd.Run(); err != nil {
-		c.String(http.StatusBadRequest, fmt.Sprintf("pattern err: %s", err.Error()))
+	if out, err := patternCmd.CombinedOutput(); err != nil {
+		c.String(http.StatusBadRequest, fmt.Sprintf("ffmpeg pattern error: %s", string(out)))
 		return
 	}
 
@@ -79,8 +79,8 @@ func upload(c *gin.Context) {
 		"-y", targetFile,
 	}
 	convertCmd := exec.Command("ffmpeg", convertArgs...)
-	if err := convertCmd.Run(); err != nil {
-		c.String(http.StatusBadRequest, fmt.Sprintf("convert err: %s", err.Error()))
+	if out, err := convertCmd.CombinedOutput(); err != nil {
+		c.String(http.StatusBadRequest, fmt.Sprintf("ffmpeg convert err: %s", string(out)))
 		return
 	}
 
